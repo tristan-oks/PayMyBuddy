@@ -4,6 +4,8 @@ import java.sql.Timestamp;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -12,11 +14,12 @@ import javax.persistence.Table;
 public class DebitBanque {
 	
 	@Id
-	@Column(name = "id")
-	private int id;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "iddebit")
+	private int idDebit;
 	
-	@Column(name = "emailutilisateur")
-	private String emailUtilisateur;
+	@Column(name = "emaildebit", length=100)
+	private String emailDebit;
 	
 	@Column(name = "comptebancaire")
 	private String compteBancaire;
@@ -27,20 +30,21 @@ public class DebitBanque {
 	@Column(name = "date")
 	private Timestamp date;
 
-	public int getId() {
-		return id;
+		
+	public int getIdDebit() {
+		return idDebit;
 	}
 
-	public void setId(int id) {
-		this.id = id;
+	public void setIdDebit(int idDebit) {
+		this.idDebit = idDebit;
 	}
 
-	public String getEmailUtilisateur() {
-		return emailUtilisateur;
+	public String getEmailDebit() {
+		return emailDebit;
 	}
 
-	public void setEmailUtilisateur(String emailUtilisateur) {
-		this.emailUtilisateur = emailUtilisateur;
+	public void setEmailDebit(String emailDebit) {
+		this.emailDebit = emailDebit;
 	}
 
 	public String getCompteBancaire() {

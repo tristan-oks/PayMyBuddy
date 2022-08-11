@@ -4,6 +4,8 @@ import java.sql.Timestamp;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -12,11 +14,12 @@ import javax.persistence.Table;
 public class Transaction {
 	
 	@Id
-	@Column(name = "id")
-	private int id;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "idtransaction")
+	private int idTransaction;
 	
-	@Column(name = "emailutilisateur")
-	private String emailUtilisateur;
+	@Column(name = "emailtransaction", length=100)
+	private String emailTransaction;
 	
 	@Column(name = "emailcontact")
 	private String emailContact;
@@ -30,20 +33,22 @@ public class Transaction {
 	@Column(name = "date")
 	private Timestamp date;
 
-	public int getId() {
-		return id;
+		
+
+	public int getIdTransaction() {
+		return idTransaction;
 	}
 
-	public void setId(int id) {
-		this.id = id;
+	public void setIdTransaction(int idTransaction) {
+		this.idTransaction = idTransaction;
 	}
 
-	public String getEmailUtilisateur() {
-		return emailUtilisateur;
+	public String getEmailTransaction() {
+		return emailTransaction;
 	}
 
-	public void setEmailUtilisateur(String emailUtilisateur) {
-		this.emailUtilisateur = emailUtilisateur;
+	public void setEmailTransaction(String emailTransaction) {
+		this.emailTransaction = emailTransaction;
 	}
 
 	public String getEmailContact() {

@@ -1,8 +1,8 @@
 package com.formation.payMyBuddy.service;
 
-import org.springframework.stereotype.Service;
+import com.formation.payMyBuddy.model.Utilisateur;
 
-@Service
 public interface IUtilisateurService {
 
+	public Iterable<Utilisateur> getUtilisateurs();
 }
