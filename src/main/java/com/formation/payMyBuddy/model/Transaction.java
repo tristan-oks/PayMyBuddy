@@ -4,9 +4,12 @@ import java.sql.Timestamp;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -18,12 +21,6 @@ public class Transaction {
 	@Column(name = "idtransaction")
 	private int idTransaction;
 	
-	@Column(name = "emailtransaction", length=100)
-	private String emailTransaction;
-	
-	@Column(name = "emailcontact")
-	private String emailContact;
-	
 	@Column(name = "montant")
 	private float montant;
 	
@@ -33,30 +30,20 @@ public class Transaction {
 	@Column(name = "date")
 	private Timestamp date;
 
-		
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "utilisateurtransaction")
+	private Utilisateur utilisateurTransaction;
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "utilisateurcontact")
+	private Utilisateur utilisateurContact;
 
-	public int getIdTransaction() {
+	public int getIdtransaction() {
 		return idTransaction;
 	}
 
-	public void setIdTransaction(int idTransaction) {
-		this.idTransaction = idTransaction;
-	}
-
-	public String getEmailTransaction() {
-		return emailTransaction;
-	}
-
-	public void setEmailTransaction(String emailTransaction) {
-		this.emailTransaction = emailTransaction;
-	}
-
-	public String getEmailContact() {
-		return emailContact;
-	}
-
-	public void setEmailContact(String emailContact) {
-		this.emailContact = emailContact;
+	public void setIdtransaction(int idtransaction) {
+		this.idTransaction = idtransaction;
 	}
 
 	public float getMontant() {
@@ -82,11 +69,22 @@ public class Transaction {
 	public void setDate(Timestamp date) {
 		this.date = date;
 	}
-	
-	
-	
-	
-	
-	
 
+	public Utilisateur getUtilisateurTransaction() {
+		return utilisateurTransaction;
+	}
+
+	public void setUtilisateurTransaction(Utilisateur utilisateurTransaction) {
+		this.utilisateurTransaction = utilisateurTransaction;
+	}
+
+	public Utilisateur getUtilisateurContact() {
+		return utilisateurContact;
+	}
+
+	public void setUtilisateurContact(Utilisateur utilisateurContact) {
+		this.utilisateurContact = utilisateurContact;
+	}
+
+	
 }

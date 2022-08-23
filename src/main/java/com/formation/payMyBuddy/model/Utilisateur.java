@@ -3,10 +3,8 @@ package com.formation.payMyBuddy.model;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
@@ -32,34 +30,22 @@ public class Utilisateur {
 	private float solde;
 
 	 //lien avec la table connexion
-	@ManyToMany(cascade = {CascadeType.ALL, CascadeType.MERGE}, fetch = FetchType.LAZY)
+	@ManyToMany
 	@JoinTable(name = "utilisateur_utilisateur", 
 		joinColumns = @JoinColumn(name = "utilisateur_email"), 
 		inverseJoinColumns = @JoinColumn(name = "contact_email"))
 	List<Utilisateur> connexions = new ArrayList<>();
 
 	// lien avec la table creditBanque
-	@OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, orphanRemoval = false, fetch = FetchType.LAZY)
-	@JoinColumn(name = "emailcredit")
-	//@JoinTable(name = "utilisateur_creditbanque", 
-	//joinColumns = @JoinColumn(name = "emailutilisateur")) 
-	//inverseJoinColumns = @JoinColumn(name = "idcredit"))
+	@OneToMany(mappedBy = "idCredit")
 	List<CreditBanque> creditsBanque = new ArrayList<>();
 
 	// lien avec la table debitBanque
-	@OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, orphanRemoval = false, fetch = FetchType.LAZY)
-	@JoinColumn(name = "emaildebit")
-	//@JoinTable(name = "utilisateur_debitbanque", 
-	//joinColumns = @JoinColumn(name = "email")) 
-	//inverseJoinColumns = @JoinColumn(name = "iddebit"))
+	@OneToMany(mappedBy = "idDebit")
 	List<DebitBanque> debitsBanque = new ArrayList<>();
 
 	// lien avec la table transaction
-	@OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, orphanRemoval = false, fetch = FetchType.LAZY)
-	@JoinColumn(name = "emailtransaction")
-	//@JoinTable(name = "utilisateur_transaction", 
-	//joinColumns = @JoinColumn(name = "email")) 
-	//inverseJoinColumns = @JoinColumn(name = "idtransaction"))
+	@OneToMany(mappedBy = "idTransaction")
 	List<Transaction> transactions = new ArrayList<>();
 
 	public String getEmail() {

@@ -1,0 +1,17 @@
+{"properties": [
+  {
+    "name": "com.formation.paymybuddy.apiUrl",
+    "type": "java.lang.String",
+    "description": "A description for 'com.formation.paymybuddy.apiUrl'"
+  },
+  {
+    "name": "com.formation.paymybuddy.apiUrl",
+    "type": "java.lang.String",
+    "description": "A description for 'com.formation.paymybuddy.apiUrl'"
+  },
+  {
+    "name": "com.formation.paymybuddy.apiUrl",
+    "type": "java.lang.String",
+    "description": "A description for 'com.formation.paymybuddy.apiUrl'"
+  }
+]}

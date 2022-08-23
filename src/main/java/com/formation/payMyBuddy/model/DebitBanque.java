@@ -4,9 +4,12 @@ import java.sql.Timestamp;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -18,9 +21,13 @@ public class DebitBanque {
 	@Column(name = "iddebit")
 	private int idDebit;
 	
-	@Column(name = "emaildebit", length=100)
-	private String emailDebit;
+	//@Column(name = "emaildebit", length=100)
+	//private String emailDebit;
 	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "utilisateurdebit")
+	private Utilisateur utilisateurDebit;
+
 	@Column(name = "comptebancaire")
 	private String compteBancaire;
 	
@@ -30,7 +37,6 @@ public class DebitBanque {
 	@Column(name = "date")
 	private Timestamp date;
 
-		
 	public int getIdDebit() {
 		return idDebit;
 	}
@@ -39,12 +45,12 @@ public class DebitBanque {
 		this.idDebit = idDebit;
 	}
 
-	public String getEmailDebit() {
-		return emailDebit;
+	public Utilisateur getUtilisateurDebit() {
+		return utilisateurDebit;
 	}
 
-	public void setEmailDebit(String emailDebit) {
-		this.emailDebit = emailDebit;
+	public void setUtilisateurDebit(Utilisateur utilisateurDebit) {
+		this.utilisateurDebit = utilisateurDebit;
 	}
 
 	public String getCompteBancaire() {
@@ -70,7 +76,7 @@ public class DebitBanque {
 	public void setDate(Timestamp date) {
 		this.date = date;
 	}
-	
-	
 
+	
+	
 }

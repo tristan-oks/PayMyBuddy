@@ -8,4 +8,5 @@ import com.formation.payMyBuddy.model.Utilisateur;
 @Repository
 public interface IUtilisateurRepository extends JpaRepository<Utilisateur,String>{
 
+	
 }

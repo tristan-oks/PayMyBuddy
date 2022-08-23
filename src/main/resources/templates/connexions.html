@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhml" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<link th:href="@{/styles/connexions.css}" rel="stylesheet">
+	<meta charset="UTF-8">
+	<title>PayMyBuddy Connexions</title>
+</head>
+
+<body>
+
+	<a href="utilisateurs">liste des utilisateurs</a>
+	<h2 class="h2">Liste des connexions</h2>
+	<table>
+		<thead>
+			<tr>
+				<th>Email utilisateur</th>
+			</tr>
+			<tr>
+				<td><span th:text="${utilisateur.email}"> Email utilisateur</span></td>
+			</tr>
+
+
+		</thead>
+		<tbody>
+			<tr>
+				<th>Email contact</th>
+			</tr>
+
+			<tr th:if="${connexions.empty}">
+				<td colspan="1">Aucune connexion pour cet utilisateur en base de données</td>
+			</tr>
+			<tr th:each="connexion: ${connexions}">
+
+				<td><span th:text="${connexion.email}"> Email contact</span></td>
+
+			</tr>
+		</tbody>
+	</table>
+</body>
+
+</html>
