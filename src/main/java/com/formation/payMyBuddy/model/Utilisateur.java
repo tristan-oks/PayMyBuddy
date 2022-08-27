@@ -45,7 +45,7 @@ public class Utilisateur {
 	List<DebitBanque> debitsBanque = new ArrayList<>();
 
 	// lien avec la table transaction
-	@OneToMany(mappedBy = "idTransaction")
+	@OneToMany(mappedBy = "utilisateurTransaction")
 	List<Transaction> transactions = new ArrayList<>();
 
 	public String getEmail() {
@@ -110,6 +110,11 @@ public class Utilisateur {
 
 	public void setTransactions(List<Transaction> transactions) {
 		this.transactions = transactions;
+	}
+
+	@Override
+	public String toString() {
+		return "Utilisateur [toString()=" + super.toString() + "]";
 	}
 
 	

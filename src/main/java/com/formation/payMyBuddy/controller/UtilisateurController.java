@@ -18,6 +18,7 @@ public class UtilisateurController {
 	@Autowired
 	private IUtilisateurService utilisateurService;
 
+
 	@GetMapping("/utilisateurs")
 	public String listUtilisateurs(Model model, HttpSession session) {
 		Iterable<Utilisateur> utilisateurs = utilisateurService.getUtilisateurs();
@@ -40,4 +41,6 @@ public class UtilisateurController {
 		model.addAttribute("connexions", connexions);
 		return "connexions";
 	}
+
+	
 }
