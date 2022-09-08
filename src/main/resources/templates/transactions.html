@@ -26,15 +26,15 @@
 
 		</thead>
 		<tbody>
-			
+
 			<tr th:if="${transactions.empty}">
 				<td colspan="6">Aucune transaction pour cet utilisateur en base de données</td>
 			</tr>
 			<tr th:each="transaction: ${transactions}">
 
 				<td><span th:text="${transaction.idTransaction}"> Id</span></td>
-				<td><span th:text="${transaction.utilisateurTransaction}"> Utilisateur</span></td>
-				<td><span th:text="${transaction.utilisateurContact}"> Contact</span></td>
+				<td><span th:text="${transaction.utilisateurTransaction.email}"> Utilisateur</span></td>
+				<td><span th:text="${transaction.utilisateurContact.email}"> Contact</span></td>
 				<td><span th:text="${transaction.montant}"> Montant</span></td>
 				<td><span th:text="${transaction.description}"> Description</span></td>
 				<td><span th:text="${transaction.date}"> Date</span></td>
@@ -42,6 +42,8 @@
 			</tr>
 		</tbody>
 	</table>
+
+	page : [[${pagenumber}]] sur nombre de pages : [[${totalpages}]]
 </body>
 
 </html>

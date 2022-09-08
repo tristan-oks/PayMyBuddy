@@ -17,7 +17,7 @@ import javax.persistence.Table;
 public class Utilisateur {
 
 	@Id
-	@Column(name = "email", length=100)
+	@Column(name = "email", length = 100)
 	private String email;
 
 	@Column(name = "motdepasse")
@@ -29,7 +29,7 @@ public class Utilisateur {
 	@Column(name = "solde")
 	private float solde;
 
-	 //lien avec la table connexion
+	// lien avec la table connexion
 	@ManyToMany
 	@JoinTable(name = "utilisateur_utilisateur", 
 		joinColumns = @JoinColumn(name = "utilisateur_email"), 
@@ -117,5 +117,4 @@ public class Utilisateur {
 		return "Utilisateur [toString()=" + super.toString() + "]";
 	}
 
-	
 }

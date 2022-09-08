@@ -38,12 +38,12 @@ public class Transaction {
 	@JoinColumn(name = "utilisateurcontact")
 	private Utilisateur utilisateurContact;
 
-	public int getIdtransaction() {
+	public int getIdTransaction() {
 		return idTransaction;
 	}
 
-	public void setIdtransaction(int idtransaction) {
-		this.idTransaction = idtransaction;
+	public void setIdTransaction(int idTransaction) {
+		this.idTransaction = idTransaction;
 	}
 
 	public float getMontant() {

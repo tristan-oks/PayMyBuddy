@@ -15,25 +15,22 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "debitbanque")
 public class DebitBanque {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "iddebit")
 	private int idDebit;
-	
-	//@Column(name = "emaildebit", length=100)
-	//private String emailDebit;
-	
+
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "utilisateurdebit")
 	private Utilisateur utilisateurDebit;
 
 	@Column(name = "comptebancaire")
 	private String compteBancaire;
-	
+
 	@Column(name = "montant")
 	private float montant;
-	
+
 	@Column(name = "date")
 	private Timestamp date;
 
@@ -77,6 +74,4 @@ public class DebitBanque {
 		this.date = date;
 	}
 
-	
-	
 }

@@ -1,11 +1,11 @@
 package com.formation.payMyBuddy.service;
 
-import java.util.List;
+import org.springframework.data.domain.Page;
 
-import com.formation.payMyBuddy.model.TransactionFormattee;
+import com.formation.payMyBuddy.model.Transaction;
 
 public interface ITransactionService {
-	
-	public List<TransactionFormattee> getTransactionsByUtilisateur(String email);
+
+	public Page<Transaction> getPagedTransactionsByUtilisateur(String email, int pageNumber);
 
 }

@@ -21,9 +21,6 @@ public class CreditBanque {
 	@Column(name = "idcredit")
 	private int idCredit;
 	
-	//@Column(name = "emailcredit", length=100)
-	//private String emailCredit;
-	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "utilisateurcredit")
 	private Utilisateur utilisateurCredit;
