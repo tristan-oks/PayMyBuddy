@@ -9,7 +9,8 @@
 
 <body>
 
-	<a href="utilisateurs">liste des utilisateurs</a>
+	<a th:href="@{/connexions}" >liste des connexions</a>
+	<a th:href="@{/utilisateurs}">liste des utilisateurs</a>
 	<a href="connexions">liste des connexions</a>
 	<h2 class="h2">Liste des transactions</h2>
 	<table>
@@ -43,7 +44,17 @@
 		</tbody>
 	</table>
 
-	page : [[${pagenumber}]] sur nombre de pages : [[${totalpages}]]
+	<P>page : [[${pagenumber}]] sur nombre de pages : [[${totalpages}]]</P>
+	<P>
+	<a th:href="@{/transactions/1}"> First </a>
+	<a th:if="${pagenumber > 2}" th:href="@{'/transactions/' + ${pagenumber - 2}}">[[${pagenumber - 2}]]</a>
+	<a th:if="${pagenumber > 1}" th:href="@{'/transactions/' + ${pagenumber - 1}}">[[${pagenumber - 1}]]</a>
+	<a th:if="${pagenumber > 0}" th:href="@{'/transactions/' + ${pagenumber}}">[[${pagenumber}]]</a>
+	<a th:if="${pagenumber < totalpages}" th:href="@{'/transactions/' + ${pagenumber +1}}">[[${pagenumber +1}]]</a>
+	<a th:if="${pagenumber < totalpages - 1}" th:href="@{'/transactions/' + ${pagenumber +2}}">[[${pagenumber +2}]]</a>
+	<a th:href="@{'/transactions/' + ${totalpages}}"> Last </a>
+	</P>
+	
 </body>
 
 </html>

@@ -18,7 +18,7 @@ public class TransactionServiceImplementation implements ITransactionService {
 
 	public Page<Transaction> getPagedTransactionsByUtilisateur(String email, int pageNumber) {
 
-		Pageable pageable = PageRequest.of(pageNumber - 1, 3);
+		Pageable pageable = PageRequest.of(pageNumber, 3);
 		Page<Transaction> page = transactionRepository.findByUtilisateurTransactionEmail(email, pageable);
 		return page;
 
