@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhml" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<link th:href="@{/styles/styles.css}" rel="stylesheet">
+	<title>PayMyBuddy Inscription</title>
+</head>
+
+<body>
+
+	<a th:href="@{/}">home</a>
+	
+	<div align="center">
+		<h1>Inscription</h1>
+		<form action="#" th:action="@{/inscription}" method="post" th:object="${utilisateur}">
+		
+			<erreur th:unless="${messageErreur == ''}"> [[${messageErreur}]] </erreur>		
+			<br />
+			<br />
+			
+			<label>Nom:</label>
+			<input type="text" required th:field="*{nom}" /><br />
+
+			<label>Email:</label>
+			<input type="email" required th:field="*{email}" /><br />
+
+			<label>Mot de Passe:</label>
+			<input type="password" required th:field="*{motDePasse}" /><br />
+
+			<button type="submit">Enregistrer</button>
+		</form>
+	</div>
+
+</body>
+
+</html>

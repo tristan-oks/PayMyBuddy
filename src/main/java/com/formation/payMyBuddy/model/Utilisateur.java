@@ -31,9 +31,7 @@ public class Utilisateur {
 
 	// lien avec la table connexion
 	@ManyToMany
-	@JoinTable(name = "utilisateur_utilisateur", 
-		joinColumns = @JoinColumn(name = "utilisateur_email"), 
-		inverseJoinColumns = @JoinColumn(name = "contact_email"))
+	@JoinTable(name = "utilisateur_utilisateur", joinColumns = @JoinColumn(name = "utilisateur_email"), inverseJoinColumns = @JoinColumn(name = "contact_email"))
 	List<Utilisateur> connexions = new ArrayList<>();
 
 	// lien avec la table creditBanque
@@ -114,7 +112,7 @@ public class Utilisateur {
 
 	@Override
 	public String toString() {
-		return "Utilisateur [toString()=" + super.toString() + "]";
+		return "email : " + email + ", nom : " + nom + ", mot de passe : " + motDePasse;
 	}
 
 }

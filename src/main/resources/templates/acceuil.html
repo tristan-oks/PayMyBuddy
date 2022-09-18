@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhml" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<link th:href="@{/styles/styles.css}" rel="stylesheet">
+	<meta charset="UTF-8">
+	<title>PayMyBuddy Acceuil</title>
+</head>
+
+<body>
+
+	<h2 class="h2">Acceuil</h2>
+	<br />
+	<br />
+	<erreur th:unless="${messageErreur == ''}">
+		[[${messageErreur}]]
+	</erreur>
+	<p th:unless="${messageErreur == ''}"><br /><br /></p>
+
+		<a id="pages" th:href="@{/connexion}">Connexion</a><br /><br />
+		<a id="pages" th:href="@{/inscription}">Inscription</a><br /><br />
+
+</body>
+
+</html>

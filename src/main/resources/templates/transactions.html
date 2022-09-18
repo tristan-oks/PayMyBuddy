@@ -2,16 +2,27 @@
 <html xmlns="http://www.w3.org/1999/xhml" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-	<link th:href="@{/styles/connexions.css}" rel="stylesheet">
+	<link th:href="@{/styles/styles.css}" rel="stylesheet">
 	<meta charset="UTF-8">
 	<title>PayMyBuddy Transactions</title>
 </head>
 
-<body>
 
-	<a th:href="@{/connexions}" >liste des connexions</a>
-	<a th:href="@{/utilisateurs}">liste des utilisateurs</a>
-	<a href="connexions">liste des connexions</a>
+<body>
+	<header>
+		<div id="entete">
+			<div id="logo">Pay My Buddy</div>
+			<div id="navbar">
+				<div><a th:href="@{/}">Home</a></div>
+				<div><a th:href="@{/transactions}">Transferts</a></div>
+				<div><a th:href="@{/profil}">Profile</a></div>
+				<div><a th:href="@{/connexions}">Contacts</a></div>
+				<div><a th:href="@{/deconnexion}">Logoff</a></div>
+			</div>
+		</div>
+	</header>
+
+
 	<h2 class="h2">Liste des transactions</h2>
 	<table>
 		<thead>
@@ -44,17 +55,20 @@
 		</tbody>
 	</table>
 
+
+	<footer>
+		<a id="pages" th:href="@{/transactions/1}"> << </a>
+		<a id="pages" th:if="${pagenumber > 2}" th:href="@{'/transactions/' + ${pagenumber - 2}}">[[${pagenumber - 2}]]</a>
+		<a id="pages" th:if="${pagenumber > 1}" th:href="@{'/transactions/' + ${pagenumber - 1}}">[[${pagenumber - 1}]]</a>
+		<a id="pages" th:if="${pagenumber > 0}" th:href="@{'/transactions/' + ${pagenumber}}">[[${pagenumber}]]</a>
+		<a id="pages" th:if="${pagenumber < totalpages}" th:href="@{'/transactions/' + ${pagenumber +1}}">[[${pagenumber +1}]]</a>
+		<a id="pages" th:if="${pagenumber < totalpages - 1}" th:href="@{'/transactions/' + ${pagenumber +2}}">[[${pagenumber
+			+2}]]</a>
+		<a id="pages" th:href="@{'/transactions/' + ${totalpages}}"> >> </a>
+	</footer>
+
 	<P>page : [[${pagenumber}]] sur nombre de pages : [[${totalpages}]]</P>
-	<P>
-	<a th:href="@{/transactions/1}"> First </a>
-	<a th:if="${pagenumber > 2}" th:href="@{'/transactions/' + ${pagenumber - 2}}">[[${pagenumber - 2}]]</a>
-	<a th:if="${pagenumber > 1}" th:href="@{'/transactions/' + ${pagenumber - 1}}">[[${pagenumber - 1}]]</a>
-	<a th:if="${pagenumber > 0}" th:href="@{'/transactions/' + ${pagenumber}}">[[${pagenumber}]]</a>
-	<a th:if="${pagenumber < totalpages}" th:href="@{'/transactions/' + ${pagenumber +1}}">[[${pagenumber +1}]]</a>
-	<a th:if="${pagenumber < totalpages - 1}" th:href="@{'/transactions/' + ${pagenumber +2}}">[[${pagenumber +2}]]</a>
-	<a th:href="@{'/transactions/' + ${totalpages}}"> Last </a>
-	</P>
-	
+
 </body>
 
 </html>

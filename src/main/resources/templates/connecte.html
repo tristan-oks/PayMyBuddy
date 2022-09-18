@@ -4,11 +4,10 @@
 <head>
 	<link th:href="@{/styles/styles.css}" rel="stylesheet">
 	<meta charset="UTF-8">
-	<title>PayMyBuddy Error</title>
+	<title>PayMyBuddy Connecté</title>
 </head>
 
 <body>
-
 	<header>
 		<div id="entete">
 			<div id="logo">Pay My Buddy</div>
@@ -21,8 +20,17 @@
 			</div>
 		</div>
 	</header>
-	<h2 class="h2">Erreur</h2>
-	la page demandée n'existe pas
+	<h2 class="h2">Connecté</h2>
+	</br>
+	</br>
+	<h3 id="logo">Bienvenue [[${nom}]]</h3>
+	</br>
+	</br>
+
+	<a id="pages" th:href="@{/connexions}">liste des connexions</a></br></br></br>
+	<a id="pages" th:href="@{/utilisateurs}">liste des utilisateurs</a></br></br></br>
+	<a id="pages" th:href="@{/transactions}">liste des transactions</a></br></br></br>
+
 </body>
 
 </html>

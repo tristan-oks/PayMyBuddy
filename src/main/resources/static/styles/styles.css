@@ -1,0 +1,95 @@
+table {
+	margin-left:auto;
+	margin-right:auto;
+  	border: 1px solid black;
+  	border-collapse: collapse;
+  	font: 16px "Open Sans", Helvetica, Arial, sans-serif;
+  	text-align: center;
+}
+
+thead {
+  background-color: green;
+  color: white;
+}
+
+th, td {
+  
+  padding:6px 9px;
+}
+
+label {
+	display: inline-block;
+        width: 200px;
+        margin: 5px;
+        text-align: left;
+}
+
+erreur {
+	border: 2px solid red;
+	font: 16px "Open Sans", Helvetica, Arial, sans-serif;
+	color: red;
+}
+
+#entete {
+	display: flex;
+  	background-color: white;  
+  	height: 30px;
+  	flex-direction: row;
+  	
+  	justify-content: space-between ;
+  	align-items: stretch;
+}
+
+body {
+	margin-left: 5%;
+	margin-right: 5%;
+	font-family: Arial, sans-serif, moderna;
+	text-align: center;
+
+}
+
+footer {
+	display: flex;
+  	background-color: white;  
+  	color : black;
+  	font: 16px "Open Sans", Helvetica, Arial, sans-serif;
+  	flex-direction: row;
+   
+   
+   	margin-left:auto;
+margin-right:auto;
+  	   text-align: center;
+   justify-content: center ; 
+  	
+}
+
+#pages {
+	border: 1px solid lightgrey;
+	padding: 10px;
+	border-radius: 5px;
+	width: auto;
+	 align-items: center;
+}
+
+#logo {
+  	background-color: green;  
+  	color : white;
+  	padding: 5px;
+  	justify-content: space-between ;
+	border-radius: 10px;
+	width: auto;
+	 align-items: center;
+ }
+
+#navbar {
+	display: flex;
+  	background-color: white;  
+  	color : black;
+  	font: 16px "Open Sans", Helvetica, Arial, sans-serif;
+  	flex-direction: row;
+  	padding-right: 5%;
+  	justify-content: right; 
+	width: auto;
+  align-items: stretch;
+  gap: 20px;
+}
