@@ -7,15 +7,15 @@
 	<title>PayMyBuddy Acceuil</title>
 </head>
 
-<body>
+<body id="boite">
 
 	<h2 class="h2">Acceuil</h2>
 	<br />
 	<br />
-	<erreur th:unless="${messageErreur == ''}">
-		[[${messageErreur}]]
+	<erreur th:unless="${message == ''}">
+		[[${message}]]
 	</erreur>
-	<p th:unless="${messageErreur == ''}"><br /><br /></p>
+	<p th:unless="${message == ''}"><br /><br /></p>
 
 		<a id="pages" th:href="@{/connexion}">Connexion</a><br /><br />
 		<a id="pages" th:href="@{/inscription}">Inscription</a><br /><br />

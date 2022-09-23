@@ -11,28 +11,39 @@
 
 	<a th:href="@{/}">Acceuil</a>
 
-	<div align="center">
-		<h1>Connexion</h1>
+	<div id="boite">
+		<h1 id="logo">Pay My Buddy</h1>
 		<form action="#" th:action="@{/connexion}" method="post">
 
-			<erreur th:unless="${messageErreur == ''}"> [[${messageErreur}]] </erreur>
+			<erreur th:unless="${message == ''}"> [[${message}]] </erreur>
+			<br />
 			<br />
 			<br />
 
 			<label>Email:</label>
 			<input id="pages" type="email" required th:field="${utilisateur.email}" /><br />
+			<br />
+			<br />
 
 			<label>Mot de Passe:</label>
 			<input id="pages" type="password" required th:field="${utilisateur.motDePasse}" /><br />
+			<br />
+			<br />
+			<br />
+			
 
 
 
 			<label>Remember Me</label>
-			<input id="pages" type="checkbox" th:checked="${remember}"  name="remember" th:value="vrai"/><br />
-			
+			<input id="pages" type="checkbox" th:checked="${remember}"  name="remember" th:value="vrai"/>
+			<br />
+			<br />
+			<br />
+			<br />
+			<br />
 			
 
-			<button id="logo" type="submit">Connexion</button>
+			<button id="logo" type="submit">Login</button>
 		</form>
 	</div>
 

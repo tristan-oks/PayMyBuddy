@@ -1,5 +1,6 @@
 package com.formation.payMyBuddy.controller;
 
+import java.util.List;
 import java.util.Optional;
 
 import javax.servlet.http.HttpSession;
@@ -8,10 +9,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.formation.payMyBuddy.model.Utilisateur;
 import com.formation.payMyBuddy.repository.IUtilisateurRepository;
@@ -35,51 +40,53 @@ public class UtilisateurController {
 		session.invalidate();
 		return "utilisateurs";
 	}
-
-	@GetMapping("/connexions")
-	public String listConnexions(Model model, HttpSession session) {
-
-		logger.info("Liste des connexions");
-		if (session.getAttribute("email") == null) {
-			logger.info("nonConnecte");
-			return "nonConnecte";
+	
+	@GetMapping("/")
+	public ModelAndView acceuil(ModelMap model,
+			@RequestParam(required = false, name = "message") String message, HttpSession session) {
+		logger.info("page d'acceuil");
+		if (session.getAttribute("email") != null) {
+			String nom = utilisateurService.getNom(session.getAttribute("email").toString());
+			model.addAttribute("nom", nom);
+			return new ModelAndView("connecte", model);
 		}
-		Optional<Utilisateur> optUtilisateur = utilisateurService
-				.getUtilisateurByEmail(session.getAttribute("email").toString());
-		Utilisateur utilisateur = optUtilisateur.get();
-		model.addAttribute("utilisateur", utilisateur);
-		Iterable<Utilisateur> connexions = utilisateur.getConnexions();
+		if (message != null) {
+			model.addAttribute("message", message);
+			logger.info("message : " + message);
+		} else {
+			model.addAttribute("message", "");
+		}
 
-		model.addAttribute("connexions", connexions);
-		return "connexions";
+		return new ModelAndView("acceuil", model);
 	}
 
+
 	@GetMapping("/inscription")
-	public String formulaireInscription(Model model, HttpSession session) {
+	public ModelAndView formulaireInscription(ModelMap model, HttpSession session) {
 
 		logger.info("affichage page Inscription");
 		if (session.getAttribute("email") != null) {
-			return utilisateurService.dejaConnecte(model, session);
+			return new ModelAndView("redirect:/");
 		}
 
 		Utilisateur utilisateur = new Utilisateur();
 		model.addAttribute("utilisateur", utilisateur);
-		String messageErreur = "";
-		model.addAttribute("messageErreur", messageErreur);
-		return "inscription";
+		String message = "";
+		model.addAttribute("message", message);
+		return new ModelAndView("inscription", model);
 	}
 
 	@PostMapping("/inscription")
-	public String inscription(@ModelAttribute("utilisateur") Utilisateur utilisateur, Model model,
+	public ModelAndView inscription(@ModelAttribute("utilisateur") Utilisateur utilisateur, ModelMap model,
 			HttpSession session) {
 
 		if (session.getAttribute("email") != null) {
-			return utilisateurService.dejaConnecte(model, session);
+			return new ModelAndView("redirect:/");
 		}
 		if (utilisateurRepository.findById(utilisateur.getEmail()).isPresent()) {
-			String messageErreur = "Utilisateur existant !";
-			model.addAttribute("messageErreur", messageErreur);
-			return "inscription";
+			String message = "Utilisateur existant !";
+			model.addAttribute("message", message);
+			return new ModelAndView("inscription", model);
 		}
 //		if (utilisateur.getEmail().isBlank() || utilisateur.getNom().isBlank()
 //				|| utilisateur.getMotDePasse().isBlank()) {
@@ -89,62 +96,50 @@ public class UtilisateurController {
 //		}
 		utilisateur.setSolde(0);
 		utilisateurRepository.save(utilisateur);
-		logger.info("utilisateur inscrit : " + utilisateur.toString());
-		String messageErreur = "utilisateur inscrit : " + utilisateur.getNom();
-		model.addAttribute("messageErreur", messageErreur);
-		return "acceuil";
-	}
-
-	@GetMapping("/")
-	public String acceuil(Model model, HttpSession session) {
-		logger.info("page d'acceuil");
-		if (session.getAttribute("email") != null) {
-			return utilisateurService.dejaConnecte(model, session);
-		}
-		String messageErreur = "";
-		model.addAttribute("messageErreur", messageErreur);
-		return "acceuil";
+		String message = "utilisateur inscrit : " + utilisateur.getNom();
+		model.addAttribute("message", message);
+		return new ModelAndView("redirect:/", model);
 	}
 
 	@GetMapping("/connexion")
-	public String formulaireConnexion(Model model, HttpSession session) {
+	public ModelAndView formulaireConnexion(ModelMap model, HttpSession session) {
 
 		logger.info("affichage page connexion");
 		if (session.getAttribute("email") != null) {
-			return utilisateurService.dejaConnecte(model, session);
+			return new ModelAndView("redirect:/");
 		}
 		String remember = "faux";
-		//session.setAttribute("remember", remember);
+		// session.setAttribute("remember", remember);
 		model.addAttribute("remember", remember);
 		Utilisateur utilisateur = new Utilisateur();
 		model.addAttribute("utilisateur", utilisateur);
-		String messageErreur = "";
-		model.addAttribute("messageErreur", messageErreur);
-		return "connexion";
+		String message = "";
+		model.addAttribute("message", message);
+		return new ModelAndView("connexion", model);
 	}
 
 	@PostMapping("/connexion")
-	public String connexion(@ModelAttribute("utilisateur") Utilisateur utilisateur,
-			@ModelAttribute("remember") String remember, Model model, HttpSession session) {
+	public ModelAndView connexion(@ModelAttribute("utilisateur") Utilisateur utilisateur,
+			@ModelAttribute("remember") String remember, ModelMap model, HttpSession session) {
 
 		logger.info("connexion");
 		if (!utilisateurRepository.findById(utilisateur.getEmail()).isPresent()) {
 			logger.info("Utilisateur inexistant !");
-			String messageErreur = "Utilisateur inexistant !";
-			model.addAttribute("messageErreur", messageErreur);
-			return "connexion";
+			String message = "Utilisateur inexistant !";
+			model.addAttribute("message", message);
+			return new ModelAndView("connexion", model);
 		}
 		Optional<Utilisateur> optUtilisateur = utilisateurService.getUtilisateurByEmail(utilisateur.getEmail());
 		Utilisateur utilisateurAConnecter = optUtilisateur.get();
 
 		logger.info("utilisateur mot de passe BDD : " + utilisateurAConnecter.getMotDePasse()
 				+ ", utilisateur mot de passe entré : " + utilisateur.getMotDePasse());
-		
+
 		if (!utilisateurAConnecter.getMotDePasse().equals(utilisateur.getMotDePasse())) {
-			String messageErreur = "Mot de passe incorrect !";
-			logger.info(messageErreur);
-			model.addAttribute("messageErreur", messageErreur);
-			return "connexion";
+			String message = "Mot de passe incorrect !";
+			logger.info(message);
+			model.addAttribute("message", message);
+			return new ModelAndView("connexion", model);
 		}
 
 		session.setAttribute("email", utilisateur.getEmail());
@@ -157,26 +152,83 @@ public class UtilisateurController {
 			logger.info("Ne pas Rester connecté : " + session.getMaxInactiveInterval() + "seconds");
 		}
 
-		logger.info("utilisateur connecté : " + utilisateur.toString());
-		return utilisateurService.dejaConnecte(model, session);
+		logger.info("utilisateur connecté : " + utilisateurAConnecter.toString());
+		return new ModelAndView("redirect:/");
 	}
 
-	@GetMapping("/connecte")
-	public String connecte(Model model, HttpSession session) {
-		logger.info("Page Connecté");
-		if (session.getAttribute("email") == null) {
-			logger.info("nonConnecte");
-			return "nonConnecte";
-		}
-		return utilisateurService.dejaConnecte(model, session);
-	}
-	
 	@GetMapping("/deconnexion")
-	public String deconnexion(Model model, HttpSession session) {
+	public ModelAndView deconnexion(ModelMap model, HttpSession session) {
 		logger.info("deconnexion");
 		session.invalidate();
-		String messageErreur = "Vous êtes déconnecté";
-		model.addAttribute("messageErreur", messageErreur);
-		return "acceuil";
+		String message = "Vous êtes déconnecté";
+		model.addAttribute("message", message);
+		return new ModelAndView("acceuil", model);
 	}
+	
+	@GetMapping("/connexions")
+	public ModelAndView listConnexions(ModelMap model, HttpSession session) {
+
+		logger.info("Liste des connexions");
+		if (session.getAttribute("email") == null) {
+			logger.info("nonConnecte");
+			return new ModelAndView("nonConnecte");
+		}
+		Optional<Utilisateur> optUtilisateur = utilisateurService
+				.getUtilisateurByEmail(session.getAttribute("email").toString());
+		Utilisateur utilisateur = optUtilisateur.get();
+		model.addAttribute("utilisateur", utilisateur);
+		Iterable<Utilisateur> connexions = utilisateur.getConnexions();
+
+		model.addAttribute("connexions", connexions);
+		model.addAttribute("emailContact", "");
+		return new ModelAndView("connexions", model);
+	}
+	
+	@PostMapping("/connexions")
+	@Transactional
+	public ModelAndView ajouterConnexion(@ModelAttribute("utilisateur") Utilisateur utilisateur,
+			@ModelAttribute("emailContact") String emailContact, ModelMap model, HttpSession session) {
+		
+		logger.info("Ajout de connexion : " + emailContact);
+		if (session.getAttribute("email") == null) {
+			logger.info("nonConnecte");
+			return new ModelAndView("nonConnecte");
+		}
+		
+		Optional<Utilisateur> optUtilisateur = utilisateurService
+				.getUtilisateurByEmail(session.getAttribute("email").toString());
+		utilisateur = optUtilisateur.get();
+		List<Utilisateur> connexions = utilisateur.getConnexions();
+		
+		if (!utilisateurRepository.findById(emailContact).isPresent()) {
+			String message = "Contact Inexistant !";
+			model.addAttribute("message", message);
+			model.addAttribute("connexions", connexions);
+			return new ModelAndView("connexions", model);
+		}
+		
+		optUtilisateur = utilisateurService
+				.getUtilisateurByEmail(emailContact);
+		Utilisateur utilisateurAConnecter = optUtilisateur.get();
+		
+		if (connexions.contains(utilisateurAConnecter)) {
+			String message = "Contact déjà ajouté ! : " + emailContact;
+			logger.info(message);
+			model.addAttribute("message", message);
+			model.addAttribute("connexions", connexions);
+			return new ModelAndView("connexions", model);
+		}
+		
+		connexions.add(utilisateurAConnecter);
+		utilisateur.setConnexions(connexions);
+		utilisateurRepository.save(utilisateur);
+		
+		String message = "Contact Ajouté : " + emailContact;
+		logger.info(message);
+		model.addAttribute("message", message);
+		model.addAttribute("connexions", connexions);
+		return new ModelAndView("connexions", model);
+	}
+	
+
 }

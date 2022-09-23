@@ -8,35 +8,57 @@
 </head>
 
 <body>
+	<header>
+		<div id="entete">
+			<div id="logo">Pay My Buddy</div>
+			<div id="navbar">
+				<div><a th:href="@{/}">Home</a></div>
+				<div><a th:href="@{/transactions}">Transferts</a></div>
+				<div><a th:href="@{/profil}">Profile</a></div>
+				<div><a th:href="@{/connexions}">Contacts</a></div>
+				<div><a th:href="@{/deconnexion}">Logoff</a></div>
+			</div>
+		</div>
+	</header>
 
-	<a th:href="@{/utilisateurs}">liste des utilisateurs</a>
-	<h2 class="h2">Liste des connexions</h2>
-	<table>
-		<thead>
-			<tr>
-				<th>Email utilisateur</th>
-			</tr>
-			<tr>
-				<td><span th:text="${utilisateur.email}"> Email utilisateur</span></td>
-			</tr>
+	<div id="boite">
+		<h2 class="h2">Connexions de [[${utilisateur.email}]]</h2>
+
+		<form action="#" th:action="@{/connexions}" method="post">
+
+			<erreur th:unless="${message == ''}"> [[${message}]] </erreur>
+			<br />
+			<br />
+
+			<label>Ajouter une connexion (Email):</label>
+			<input type="email" required name="emailContact" />
+			<br />
+			<br />
+
+			<button type="submit">Enregistrer</button>
+			<br />
+			<br />
+
+		</form>
 
 
-		</thead>
-		<tbody>
-			<tr>
-				<th>Email contact</th>
-			</tr>
+		<table>
+			<tbody>
+				<tr>
+					<th>Email contact</th>
+				</tr>
 
-			<tr th:if="${connexions.empty}">
-				<td colspan="1">Aucune connexion pour cet utilisateur en base de données</td>
-			</tr>
-			<tr th:each="connexion: ${connexions}">
+				<tr th:if="${connexions.empty}">
+					<td colspan="1">Aucune connexion pour cet utilisateur en base de données</td>
+				</tr>
+				<tr th:each="connexion: ${connexions}">
 
-				<td><span th:text="${connexion.email}"> Email contact</span></td>
+					<td><span th:text="${connexion.email}"> Email contact</span></td>
 
-			</tr>
-		</tbody>
-	</table>
+				</tr>
+			</tbody>
+		</table>
+	</div>
 </body>
 
 </html>
