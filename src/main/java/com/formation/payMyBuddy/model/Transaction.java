@@ -2,6 +2,7 @@ package com.formation.payMyBuddy.model;
 
 import java.sql.Timestamp;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -30,11 +31,11 @@ public class Transaction {
 	@Column(name = "date")
 	private Timestamp date;
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
 	@JoinColumn(name = "utilisateurtransaction")
 	private Utilisateur utilisateurTransaction;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
 	@JoinColumn(name = "utilisateurcontact")
 	private Utilisateur utilisateurContact;
 

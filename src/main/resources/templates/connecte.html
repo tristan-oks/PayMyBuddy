@@ -4,7 +4,7 @@
 <head>
 	<link th:href="@{/styles/styles.css}" rel="stylesheet">
 	<meta charset="UTF-8">
-	<title>PayMyBuddy Connecté</title>
+	<title>PayMyBuddy Connected</title>
 </head>
 
 <body>
@@ -13,24 +13,25 @@
 			<div id="logo">Pay My Buddy</div>
 			<div id="navbar">
 				<div><a th:href="@{/}">Home</a></div>
-				<div><a th:href="@{/transactions}">Transferts</a></div>
+				<div><a th:href="@{/transactions}">Transfer</a></div>
 				<div><a th:href="@{/profil}">Profile</a></div>
 				<div><a th:href="@{/connexions}">Contacts</a></div>
 				<div><a th:href="@{/deconnexion}">Logoff</a></div>
 			</div>
 		</div>
 	</header>
+	</br>
 	<div id="boite">
-		<h2 class="h2">Connecté</h2>
+		<h2 class="h2">Connected</h2>
 		</br>
-		</br>
-		<h3 id="logo">Bienvenue [[${nom}]]</h3>
+		<h3 id="logo">Welcome [[${nom}]]</h3>
 		</br>
 		</br>
 
-		<a id="pages" th:href="@{/connexions}">liste des connexions</a></br></br></br>
-		<a id="pages" th:href="@{/utilisateurs}">liste des utilisateurs</a></br></br></br>
-		<a id="pages" th:href="@{/transactions}">liste des transactions</a></br></br></br>
+		<a id="pages" th:href="@{/transactions}">Transferts</a></br></br>
+		<a id="pages" th:href="@{/profil}">Profile</a></br></br>
+		<a id="pages" th:href="@{/connexions}">Contacts</a></br></br>
+		<a id="pages" th:href="@{/deconnexion}">Logoff</a></br></br>
 	</div>
 
 </body>

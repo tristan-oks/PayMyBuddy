@@ -1,7 +1,7 @@
 package com.formation.payMyBuddy.controller;
 
-import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import javax.servlet.http.HttpSession;
 
@@ -10,7 +10,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -32,18 +31,18 @@ public class UtilisateurController {
 
 	private Logger logger = LoggerFactory.getLogger(getClass());
 
-	@GetMapping("/utilisateurs")
-	public String listUtilisateurs(Model model, HttpSession session) {
-		Iterable<Utilisateur> utilisateurs = utilisateurService.getUtilisateurs();
-		logger.info("liste des utilisateurs");
-		model.addAttribute("utilisateurs", utilisateurs);
-		session.invalidate();
-		return "utilisateurs";
-	}
-	
+//	@GetMapping("/utilisateurs")
+//	public String listUtilisateurs(Model model, HttpSession session) {
+//		Iterable<Utilisateur> utilisateurs = utilisateurService.getUtilisateurs();
+//		logger.info("liste des utilisateurs");
+//		model.addAttribute("utilisateurs", utilisateurs);
+//		session.invalidate();
+//		return "utilisateurs";
+//	}
+
 	@GetMapping("/")
-	public ModelAndView acceuil(ModelMap model,
-			@RequestParam(required = false, name = "message") String message, HttpSession session) {
+	public ModelAndView acceuil(ModelMap model, @RequestParam(required = false, name = "message") String message,
+			HttpSession session) {
 		logger.info("page d'acceuil");
 		if (session.getAttribute("email") != null) {
 			String nom = utilisateurService.getNom(session.getAttribute("email").toString());
@@ -59,7 +58,6 @@ public class UtilisateurController {
 
 		return new ModelAndView("acceuil", model);
 	}
-
 
 	@GetMapping("/inscription")
 	public ModelAndView formulaireInscription(ModelMap model, HttpSession session) {
@@ -83,7 +81,7 @@ public class UtilisateurController {
 		if (session.getAttribute("email") != null) {
 			return new ModelAndView("redirect:/");
 		}
-		if (utilisateurRepository.findById(utilisateur.getEmail()).isPresent()) {
+		if (utilisateurService.getUtilisateurByEmail(utilisateur.getEmail()).isPresent()) {
 			String message = "Utilisateur existant !";
 			model.addAttribute("message", message);
 			return new ModelAndView("inscription", model);
@@ -123,13 +121,15 @@ public class UtilisateurController {
 			@ModelAttribute("remember") String remember, ModelMap model, HttpSession session) {
 
 		logger.info("connexion");
-		if (!utilisateurRepository.findById(utilisateur.getEmail()).isPresent()) {
+		Optional<Utilisateur> optUtilisateur = utilisateurService.getUtilisateurByEmail(utilisateur.getEmail());
+
+		if (optUtilisateur.isEmpty()) {
 			logger.info("Utilisateur inexistant !");
 			String message = "Utilisateur inexistant !";
 			model.addAttribute("message", message);
 			return new ModelAndView("connexion", model);
 		}
-		Optional<Utilisateur> optUtilisateur = utilisateurService.getUtilisateurByEmail(utilisateur.getEmail());
+
 		Utilisateur utilisateurAConnecter = optUtilisateur.get();
 
 		logger.info("utilisateur mot de passe BDD : " + utilisateurAConnecter.getMotDePasse()
@@ -164,71 +164,142 @@ public class UtilisateurController {
 		model.addAttribute("message", message);
 		return new ModelAndView("acceuil", model);
 	}
-	
+
 	@GetMapping("/connexions")
 	public ModelAndView listConnexions(ModelMap model, HttpSession session) {
 
 		logger.info("Liste des connexions");
 		if (session.getAttribute("email") == null) {
-			logger.info("nonConnecte");
-			return new ModelAndView("nonConnecte");
+			return nonConnecte();
 		}
-		Optional<Utilisateur> optUtilisateur = utilisateurService
-				.getUtilisateurByEmail(session.getAttribute("email").toString());
-		Utilisateur utilisateur = optUtilisateur.get();
+		
+//		Optional<Utilisateur> optUtilisateur = utilisateurService
+//				.getUtilisateurByEmail(session.getAttribute("email").toString());
+//		Utilisateur utilisateur = optUtilisateur.get();
+		Utilisateur utilisateur = getUtilisateur(session.getAttribute("email").toString());
+		
 		model.addAttribute("utilisateur", utilisateur);
 		Iterable<Utilisateur> connexions = utilisateur.getConnexions();
 
+		String message = "";
+		model.addAttribute("message", message);
 		model.addAttribute("connexions", connexions);
 		model.addAttribute("emailContact", "");
 		return new ModelAndView("connexions", model);
 	}
-	
+
 	@PostMapping("/connexions")
 	@Transactional
 	public ModelAndView ajouterConnexion(@ModelAttribute("utilisateur") Utilisateur utilisateur,
 			@ModelAttribute("emailContact") String emailContact, ModelMap model, HttpSession session) {
-		
+
 		logger.info("Ajout de connexion : " + emailContact);
 		if (session.getAttribute("email") == null) {
-			logger.info("nonConnecte");
-			return new ModelAndView("nonConnecte");
+			return nonConnecte();
 		}
+
+//		Optional<Utilisateur> optUtilisateur = utilisateurService
+//				.getUtilisateurByEmail(session.getAttribute("email").toString());
+//		utilisateur = optUtilisateur.get();
+		utilisateur = getUtilisateur(session.getAttribute("email").toString());
 		
-		Optional<Utilisateur> optUtilisateur = utilisateurService
-				.getUtilisateurByEmail(session.getAttribute("email").toString());
-		utilisateur = optUtilisateur.get();
-		List<Utilisateur> connexions = utilisateur.getConnexions();
-		
-		if (!utilisateurRepository.findById(emailContact).isPresent()) {
-			String message = "Contact Inexistant !";
+		Set<Utilisateur> connexions = utilisateur.getConnexions();
+
+		if (session.getAttribute("email").toString().equals(emailContact)) {
+			String message = "Impossible de s'ajouter soi-même ! ";
+			logger.info(message);
+			model.addAttribute("utilisateur", utilisateur);
 			model.addAttribute("message", message);
 			model.addAttribute("connexions", connexions);
 			return new ModelAndView("connexions", model);
 		}
-		
-		optUtilisateur = utilisateurService
-				.getUtilisateurByEmail(emailContact);
-		Utilisateur utilisateurAConnecter = optUtilisateur.get();
-		
-		if (connexions.contains(utilisateurAConnecter)) {
+
+		if (!utilisateurRepository.findById(emailContact).isPresent()) {
+			String message = "Contact Inexistant !";
+			model.addAttribute("utilisateur", utilisateur);
+			model.addAttribute("message", message);
+			model.addAttribute("connexions", connexions);
+			return new ModelAndView("connexions", model);
+		}
+
+//		optUtilisateur = utilisateurService.getUtilisateurByEmail(emailContact);
+//		Utilisateur utilisateurAAjouter = optUtilisateur.get();
+		Utilisateur utilisateurAAjouter = getUtilisateur(emailContact);
+
+		if (connexions.contains(utilisateurAAjouter)) {
 			String message = "Contact déjà ajouté ! : " + emailContact;
 			logger.info(message);
 			model.addAttribute("message", message);
+			model.addAttribute("utilisateur", utilisateur);
 			model.addAttribute("connexions", connexions);
 			return new ModelAndView("connexions", model);
 		}
-		
-		connexions.add(utilisateurAConnecter);
+
+		connexions.add(utilisateurAAjouter);
 		utilisateur.setConnexions(connexions);
 		utilisateurRepository.save(utilisateur);
-		
+
 		String message = "Contact Ajouté : " + emailContact;
 		logger.info(message);
 		model.addAttribute("message", message);
+		model.addAttribute("utilisateur", utilisateur);
 		model.addAttribute("connexions", connexions);
 		return new ModelAndView("connexions", model);
 	}
-	
 
+	@GetMapping("/profil")
+	public ModelAndView affichageProfil(ModelMap model, HttpSession session) {
+
+		logger.info("Affichage Profil");
+		if (session.getAttribute("email") == null) {
+			return nonConnecte();
+		}
+//		Optional<Utilisateur> optUtilisateur = utilisateurService
+//				.getUtilisateurByEmail(session.getAttribute("email").toString());
+//		Utilisateur utilisateur = optUtilisateur.get();
+		Utilisateur utilisateur = getUtilisateur(session.getAttribute("email").toString());
+		
+		model.addAttribute("utilisateur", utilisateur);
+
+		String message = "";
+		model.addAttribute("message", message);
+		return new ModelAndView("profil", model);
+	}
+
+	@PostMapping("/profil")
+	@Transactional
+	public ModelAndView modifProfil(@ModelAttribute("utilisateur") Utilisateur utilisateur,
+			@ModelAttribute("compteBancaire") String compteBancaire, @ModelAttribute("creditDebit") String creditDebit,
+			@ModelAttribute("montant") float montant, ModelMap model, HttpSession session) {
+
+		logger.info("Modification de profil");
+		logger.info(utilisateur.toString());
+		logger.info("compteBancaire : " + compteBancaire + ", creditDebit : " + creditDebit + ", montant : " + montant);
+		String email = session.getAttribute("email").toString();
+		if (email == null) {
+			return nonConnecte();
+		}
+
+		String message = utilisateurService.modifierUtilisateur(email, utilisateur, compteBancaire, creditDebit,
+				montant);
+		model.addAttribute("message", message);
+
+//		Optional<Utilisateur> optUtilisateur = utilisateurService
+//				.getUtilisateurByEmail(session.getAttribute("email").toString());
+//		utilisateur = optUtilisateur.get();
+		utilisateur = getUtilisateur(session.getAttribute("email").toString());
+		
+		model.addAttribute("utilisateur", utilisateur);
+		return new ModelAndView("profil", model);
+	}
+
+	private ModelAndView nonConnecte() {
+		logger.info("nonConnecte");
+		return new ModelAndView("nonConnecte");
+	}
+
+	private Utilisateur getUtilisateur(String email) {
+		Optional<Utilisateur> optUtilisateur = utilisateurService.getUtilisateurByEmail(email);
+		return optUtilisateur.get();
+	}
 }

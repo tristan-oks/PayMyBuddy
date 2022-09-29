@@ -1,7 +1,9 @@
 package com.formation.payMyBuddy.model;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -35,7 +37,7 @@ public class Utilisateur {
 	// lien avec la table connexion
 	@ManyToMany
 	@JoinTable(name = "utilisateur_utilisateur", joinColumns = @JoinColumn(name = "utilisateur_email"), inverseJoinColumns = @JoinColumn(name = "contact_email"))
-	List<Utilisateur> connexions = new ArrayList<>();
+	Set<Utilisateur> connexions = new HashSet<>();
 
 	// lien avec la table creditBanque
 	@OneToMany(mappedBy = "idCredit")
@@ -81,11 +83,11 @@ public class Utilisateur {
 		this.solde = solde;
 	}
 
-	public List<Utilisateur> getConnexions() {
+	public Set<Utilisateur> getConnexions() {
 		return connexions;
 	}
 
-	public void setConnexions(List<Utilisateur> connexions) {
+	public void setConnexions(Set<Utilisateur> connexions) {
 		this.connexions = connexions;
 	}
 
@@ -115,7 +117,7 @@ public class Utilisateur {
 
 	@Override
 	public String toString() {
-		return "email : " + email + ", nom : " + nom + ", mot de passe : " + motDePasse;
+		return "email : " + email + ", nom : " + nom + ", mot de passe : " + motDePasse + ", solde : " + solde;
 	}
 
 }

@@ -4,12 +4,14 @@
 <head>
 	<meta charset="UTF-8">
 	<link th:href="@{/styles/styles.css}" rel="stylesheet">
-	<title>PayMyBuddy Connexion</title>
+	<title>PayMyBuddy Connection</title>
 </head>
 
 <body>
 
-	<a th:href="@{/}">Acceuil</a>
+	<a th:href="@{/}">Home</a>
+	</br>
+	</br>
 
 	<div id="boite">
 		<h1 id="logo">Pay My Buddy</h1>
@@ -25,15 +27,12 @@
 			<br />
 			<br />
 
-			<label>Mot de Passe:</label>
+			<label>Password:</label>
 			<input id="pages" type="password" required th:field="${utilisateur.motDePasse}" /><br />
 			<br />
 			<br />
 			<br />
 			
-
-
-
 			<label>Remember Me</label>
 			<input id="pages" type="checkbox" th:checked="${remember}"  name="remember" th:value="vrai"/>
 			<br />
@@ -41,9 +40,8 @@
 			<br />
 			<br />
 			<br />
-			
 
-			<button id="logo" type="submit">Login</button>
+			<button id="bouton" type="submit">Login</button>
 		</form>
 	</div>
 

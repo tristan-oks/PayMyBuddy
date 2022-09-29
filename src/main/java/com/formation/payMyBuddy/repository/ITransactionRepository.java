@@ -10,5 +10,5 @@ import com.formation.payMyBuddy.model.Transaction;
 @Repository
 public interface ITransactionRepository extends JpaRepository<Transaction,Integer>{
 
-	Page<Transaction> findByUtilisateurTransactionEmail(String email, Pageable pageable);
+	Page<Transaction> findByUtilisateurTransactionEmailOrderByDateDesc(String email, Pageable pageable);
 }

@@ -11,4 +11,6 @@ public interface IUtilisateurService {
 	public Optional<Utilisateur> getUtilisateurByEmail(String email);
 
 	public String getNom(String email);
+
+	public String modifierUtilisateur(String email, Utilisateur utilisateur, String compteBancaire, String creditDebit, float montant);
 }

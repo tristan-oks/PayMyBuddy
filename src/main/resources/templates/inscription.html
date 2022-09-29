@@ -9,7 +9,8 @@
 
 <body id="boite">
 
-	<a th:href="@{/}">home</a>
+	<a th:href="@{/}">Home</a>
+	</br>
 	
 	<div align="center">
 		<h1>Inscription</h1>
@@ -19,16 +20,20 @@
 			<br />
 			<br />
 			
-			<label>Nom:</label>
+			
+			<label>Name:</label>
 			<input type="text" required th:field="*{nom}" /><br />
 
 			<label>Email:</label>
 			<input type="email" required th:field="*{email}" /><br />
 
-			<label>Mot de Passe:</label>
+			<label>Password:</label>
 			<input type="password" required th:field="*{motDePasse}" /><br />
+			<br />
+			<br />
+			<br />
 
-			<button type="submit">Enregistrer</button>
+			<button id="bouton" type="submit">Register</button>
 		</form>
 	</div>
 
