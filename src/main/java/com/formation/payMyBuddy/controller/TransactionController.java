@@ -58,8 +58,6 @@ public class TransactionController {
 				.getUtilisateurByEmail(session.getAttribute("email").toString());
 		Utilisateur utilisateur = optUtilisateur.get();
 		model.addAttribute("listConnexions", utilisateur.getConnexions());
-		// String message = "";
-		// model.addAttribute("message", message);
 		return "transactions";
 	}
 
@@ -68,7 +66,6 @@ public class TransactionController {
 			@ModelAttribute("montant") float montant, @ModelAttribute("description") String description,
 			HttpSession session) {
 
-		// logger.info("post a transactions page n° " + currentPage);
 		logger.info("connexion : " + connexion.toString());
 		logger.info("description : " + description);
 		logger.info("montant : " + montant);

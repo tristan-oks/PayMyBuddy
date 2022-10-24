@@ -6,7 +6,7 @@ import com.formation.payMyBuddy.model.Utilisateur;
 
 public interface IUtilisateurService {
 
-	public Iterable<Utilisateur> getUtilisateurs();
+	//public Iterable<Utilisateur> getUtilisateurs();
 
 	public Optional<Utilisateur> getUtilisateurByEmail(String email);
 

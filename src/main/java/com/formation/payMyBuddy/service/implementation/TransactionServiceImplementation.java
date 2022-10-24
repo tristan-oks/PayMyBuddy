@@ -10,6 +10,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.formation.payMyBuddy.model.DebitBanque;
 import com.formation.payMyBuddy.model.Transaction;
@@ -39,20 +40,20 @@ public class TransactionServiceImplementation implements ITransactionService {
 
 	}
 
+	@Transactional
 	public String transaction(String email, Utilisateur connexion, float montant, String description) {
 		String message = "";
 		Optional<Utilisateur> optUtilisateur = utilisateurService.getUtilisateurByEmail(email);
 		Utilisateur utilisateur = optUtilisateur.get();
 		float solde = utilisateur.getSolde();
+		float soldeConnexion = connexion.getSolde();
 		if (solde < montant * (1 + 0.005)) {
 			message = "montant trop élevé !";
 			logger.info(message);
 			return message;
 		}
 		utilisateur.setSolde((float) (solde - montant * (1 + 0.005)));
-		// utilisateurRepo.save(utilisateur);
-		connexion.setSolde((float) (solde + montant));
-		// utilisateurRepo.save(connexion);
+		connexion.setSolde((float) (soldeConnexion + montant));
 
 		DebitBanque debit = new DebitBanque();
 		debit.setCompteBancaire("PayMyBuddy");

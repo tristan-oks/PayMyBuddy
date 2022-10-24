@@ -29,9 +29,9 @@ public class UtilisateurServiceImplementation implements IUtilisateurService {
 
 	private Logger logger = LoggerFactory.getLogger(getClass());
 
-	public Iterable<Utilisateur> getUtilisateurs() {
-		return utilisateurRepo.findAll();
-	}
+//	public Iterable<Utilisateur> getUtilisateurs() {
+//		return utilisateurRepo.findAll();
+//	}
 
 	public Optional<Utilisateur> getUtilisateurByEmail(String email) {
 		return utilisateurRepo.findById(email);
@@ -76,17 +76,14 @@ public class UtilisateurServiceImplementation implements IUtilisateurService {
 			return message;
 		}
 		if (creditDebit.equals("credit")) {
-			//List<CreditBanque> creditsBanque = utilisateurAModifier.getCreditsBanque();
 			CreditBanque credit = new CreditBanque();
 			credit.setCompteBancaire(compteBancaire);
 			Timestamp timestamp = new Timestamp(System.currentTimeMillis());
 			credit.setDate(timestamp);
 			credit.setMontant(montant);
 			credit.setUtilisateurCredit(utilisateurAModifier);
-			//creditsBanque.add(credit);
 			creditBanqueRepo.save(credit);
 			
-			//utilisateurAModifier.setCreditsBanque(creditsBanque);
 			utilisateurAModifier.setSolde(utilisateurAModifier.getSolde() + montant);
 			utilisateurRepo.save(utilisateurAModifier);
 			String message = "Compte Bancaire " + compteBancaire + " crédité de : " + montant + ", ";
@@ -98,17 +95,14 @@ public class UtilisateurServiceImplementation implements IUtilisateurService {
 				logger.info(message);
 				return message;
 			}
-			//List<DebitBanque> debitsBanque = utilisateurAModifier.getDebitsBanque();
 			DebitBanque debit = new DebitBanque();
 			debit.setCompteBancaire(compteBancaire);
 			Timestamp timestamp = new Timestamp(System.currentTimeMillis());
 			debit.setDate(timestamp);
 			debit.setMontant(montant);
 			debit.setUtilisateurDebit(utilisateurAModifier);
-			//debitsBanque.add(debit);
 			debitBanqueRepo.save(debit);
 			
-			//utilisateurAModifier.setDebitsBanque(debitsBanque);
 			utilisateurAModifier.setSolde(utilisateurAModifier.getSolde() - montant);
 			utilisateurRepo.save(utilisateurAModifier);
 			String message = "Compte Bancaire " + compteBancaire + " débité de : " + montant + ", ";

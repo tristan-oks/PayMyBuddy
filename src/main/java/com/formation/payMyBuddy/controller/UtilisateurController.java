@@ -31,15 +31,6 @@ public class UtilisateurController {
 
 	private Logger logger = LoggerFactory.getLogger(getClass());
 
-//	@GetMapping("/utilisateurs")
-//	public String listUtilisateurs(Model model, HttpSession session) {
-//		Iterable<Utilisateur> utilisateurs = utilisateurService.getUtilisateurs();
-//		logger.info("liste des utilisateurs");
-//		model.addAttribute("utilisateurs", utilisateurs);
-//		session.invalidate();
-//		return "utilisateurs";
-//	}
-
 	@GetMapping("/")
 	public ModelAndView acceuil(ModelMap model, @RequestParam(required = false, name = "message") String message,
 			HttpSession session) {
@@ -86,12 +77,6 @@ public class UtilisateurController {
 			model.addAttribute("message", message);
 			return new ModelAndView("inscription", model);
 		}
-//		if (utilisateur.getEmail().isBlank() || utilisateur.getNom().isBlank()
-//				|| utilisateur.getMotDePasse().isBlank()) {
-//			String messageErreur = "Veuiller renseigner tous les champs !";
-//			model.addAttribute("messageErreur", messageErreur);
-//			return "inscription";
-//		}
 		utilisateur.setSolde(0);
 		utilisateurRepository.save(utilisateur);
 		String message = "utilisateur inscrit : " + utilisateur.getNom();
@@ -107,7 +92,6 @@ public class UtilisateurController {
 			return new ModelAndView("redirect:/");
 		}
 		String remember = "faux";
-		// session.setAttribute("remember", remember);
 		model.addAttribute("remember", remember);
 		Utilisateur utilisateur = new Utilisateur();
 		model.addAttribute("utilisateur", utilisateur);
@@ -172,12 +156,8 @@ public class UtilisateurController {
 		if (session.getAttribute("email") == null) {
 			return nonConnecte();
 		}
-		
-//		Optional<Utilisateur> optUtilisateur = utilisateurService
-//				.getUtilisateurByEmail(session.getAttribute("email").toString());
-//		Utilisateur utilisateur = optUtilisateur.get();
+
 		Utilisateur utilisateur = getUtilisateur(session.getAttribute("email").toString());
-		
 		model.addAttribute("utilisateur", utilisateur);
 		Iterable<Utilisateur> connexions = utilisateur.getConnexions();
 
@@ -198,11 +178,7 @@ public class UtilisateurController {
 			return nonConnecte();
 		}
 
-//		Optional<Utilisateur> optUtilisateur = utilisateurService
-//				.getUtilisateurByEmail(session.getAttribute("email").toString());
-//		utilisateur = optUtilisateur.get();
 		utilisateur = getUtilisateur(session.getAttribute("email").toString());
-		
 		Set<Utilisateur> connexions = utilisateur.getConnexions();
 
 		if (session.getAttribute("email").toString().equals(emailContact)) {
@@ -222,8 +198,6 @@ public class UtilisateurController {
 			return new ModelAndView("connexions", model);
 		}
 
-//		optUtilisateur = utilisateurService.getUtilisateurByEmail(emailContact);
-//		Utilisateur utilisateurAAjouter = optUtilisateur.get();
 		Utilisateur utilisateurAAjouter = getUtilisateur(emailContact);
 
 		if (connexions.contains(utilisateurAAjouter)) {
@@ -254,13 +228,8 @@ public class UtilisateurController {
 		if (session.getAttribute("email") == null) {
 			return nonConnecte();
 		}
-//		Optional<Utilisateur> optUtilisateur = utilisateurService
-//				.getUtilisateurByEmail(session.getAttribute("email").toString());
-//		Utilisateur utilisateur = optUtilisateur.get();
 		Utilisateur utilisateur = getUtilisateur(session.getAttribute("email").toString());
-		
 		model.addAttribute("utilisateur", utilisateur);
-
 		String message = "";
 		model.addAttribute("message", message);
 		return new ModelAndView("profil", model);
@@ -283,12 +252,7 @@ public class UtilisateurController {
 		String message = utilisateurService.modifierUtilisateur(email, utilisateur, compteBancaire, creditDebit,
 				montant);
 		model.addAttribute("message", message);
-
-//		Optional<Utilisateur> optUtilisateur = utilisateurService
-//				.getUtilisateurByEmail(session.getAttribute("email").toString());
-//		utilisateur = optUtilisateur.get();
 		utilisateur = getUtilisateur(session.getAttribute("email").toString());
-		
 		model.addAttribute("utilisateur", utilisateur);
 		return new ModelAndView("profil", model);
 	}
