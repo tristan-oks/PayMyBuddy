@@ -1,9 +1,3 @@
-/*
--- Query: SELECT * FROM test.transaction
-LIMIT 0, 1000
-
--- Date: 2022-10-18 16:27
-*/
 INSERT INTO `transaction` (`idtransaction`,`date`,`description`,`montant`,`utilisateurcontact`,`utilisateurtransaction`) VALUES (1,'2022-08-11 13:58:38','1€ de un vers deux',1,'un@test.com','dex@test.com');
 INSERT INTO `transaction` (`idtransaction`,`date`,`description`,`montant`,`utilisateurcontact`,`utilisateurtransaction`) VALUES (2,'2022-08-11 13:59:03','2€ de un vers deux',2,'deux@test.com','un@test.com');
 INSERT INTO `transaction` (`idtransaction`,`date`,`description`,`montant`,`utilisateurcontact`,`utilisateurtransaction`) VALUES (3,'2022-08-11 13:59:26','1€ de un vers deux',1,'deux@test.com','un@test.com');

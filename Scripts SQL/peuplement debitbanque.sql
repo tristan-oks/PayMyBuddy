@@ -1,9 +1,3 @@
-/*
--- Query: SELECT * FROM test.debitbanque
-LIMIT 0, 1000
-
--- Date: 2022-10-18 16:29
-*/
 INSERT INTO `debitbanque` (`iddebit`,`comptebancaire`,`date`,`montant`,`utilisateurdebit`) VALUES (1,'123456789','2022-08-11 13:54:40',10,'un@test.com');
 INSERT INTO `debitbanque` (`iddebit`,`comptebancaire`,`date`,`montant`,`utilisateurdebit`) VALUES (2,'222222222','2022-08-11 13:54:40',20,'deux@test.com');
 INSERT INTO `debitbanque` (`iddebit`,`comptebancaire`,`date`,`montant`,`utilisateurdebit`) VALUES (3,'PayMyBuddy','2022-09-26 02:14:52',0.5,'un@test.com');
