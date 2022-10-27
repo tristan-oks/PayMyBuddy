@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhml" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<link th:href="@{/styles/styles.css}" rel="stylesheet">
+	<meta charset="UTF-8">
+	<title>PayMyBuddy Transactions</title>
+</head>
+
+<body>
+	<header>
+		<div id="entete">
+			<div id="logo">Pay My Buddy</div>
+			<div id="navbar">
+				<div><a th:href="@{/}">Home</a></div>
+				<div><a th:href="@{/transactions}">Transfer</a></div>
+				<div><a th:href="@{/profil}">Profile</a></div>
+				<div><a th:href="@{/connexions}">Contacts</a></div>
+				<div><a th:href="@{/deconnexion}">Logoff</a></div>
+			</div>
+		</div>
+		</br>
+		<div style="text-align:left; margin-left:20px"><a th:href="@{/}">Home /</a> Transfer</div>
+	</header>
+	</br>
+
+	<div id="boite">
+
+		<br />
+		<erreur th:unless="${message == null}"> [[${message}]] </erreur>
+		<br />
+		
+		<div id="entete" style="width:500px">
+			<div>Send Money :</div>
+			<div><a id="bouton" th:href="@{/connexions}">Add Connection</a></div>
+		</div>
+
+		
+		<br />
+
+		<form action="#" th:action="@{/transactions}" method="post">
+
+			<label>Contact : </label>
+			<select style="width:206px; height:20px;" type="email" name="connexion" required value="">
+				<option value="" selected disabled hidden>Select a connexion</option>
+				<option th:each="p : ${listConnexions}" th:value="${p.email}" th:text="${p.email}" />
+			</select>
+			<br />
+
+			<label>Description : </label>
+			<input type="text" name="description" value="" />
+			<br />
+
+			<label>Amount : </label>
+			<input type="number" min="0" name="montant" value="0" />
+			<br />
+
+
+			<button id="bouton" type="submit">Pay</button>
+
+		</form>
+
+		<p style="width:500px; text-align:left;">My transactions</p>
+
+		<table style="width:500px">
+
+			<thead>
+				<tr>
+					<th>Connections</th>
+					<th style="width:100%">Description</th>
+					<th>Amount</th>
+				</tr>
+
+
+			</thead>
+			<tbody>
+
+				<tr th:if="${transactions.empty}">
+					<td colspan="6">No transaction recorded in database</td>
+				</tr>
+				<tr th:each="transaction: ${transactions}">
+
+					<td><span th:text="${transaction.utilisateurContact.email}"> Connections</span></td>
+					<td><span th:text="${transaction.description}"> Description</span></td>
+					<td><span th:text="${transaction.montant} + €"> Amount</span></td>
+
+				</tr>
+			</tbody>
+		</table>
+
+
+		<footer>
+			<a id="pages" th:href="@{/transactions/1}">
+				<< </a>
+					<a id="pages" th:if="${pagenumber > 2}"
+						th:href="@{'/transactions/' + ${pagenumber - 2}}">[[${pagenumber
+						- 2}]]</a>
+					<a id="pages" th:if="${pagenumber > 1}"
+						th:href="@{'/transactions/' + ${pagenumber - 1}}">[[${pagenumber
+						- 1}]]</a>
+					<a id="pages" th:if="${pagenumber > 0}"
+						th:href="@{'/transactions/' + ${pagenumber}}">[[${pagenumber}]]</a>
+					<a id="pages" th:if="${pagenumber < totalpages}"
+						th:href="@{'/transactions/' + ${pagenumber +1}}">[[${pagenumber +1}]]</a>
+					<a id="pages" th:if="${pagenumber < totalpages - 1}"
+						th:href="@{'/transactions/' + ${pagenumber +2}}">[[${pagenumber
+						+2}]]</a>
+					<a id="pages" th:href="@{'/transactions/' + ${totalpages}}"> >> </a>
+		</footer>
+	</div>
+</body>
+
+</html>

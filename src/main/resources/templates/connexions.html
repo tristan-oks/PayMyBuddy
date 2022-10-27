@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhml" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<link th:href="@{/styles/styles.css}" rel="stylesheet">
+	<meta charset="UTF-8">
+	<title>PayMyBuddy Connections</title>
+</head>
+
+<body>
+	<div align="center">
+		<header>
+			<div id="entete">
+				<div id="logo">Pay My Buddy</div>
+				<div id="navbar">
+					<div><a th:href="@{/}">Home</a></div>
+					<div><a th:href="@{/transactions}">Transfer</a></div>
+					<div><a th:href="@{/profil}">Profile</a></div>
+					<div><a th:href="@{/connexions}">Contacts</a></div>
+					<div><a th:href="@{/deconnexion}">Logoff</a></div>
+				</div>
+			</div>
+		</header>
+		</br>
+
+		<div id="boite">
+			<h2 class="h2">[[${utilisateur.email}]] Contacts</h2>
+
+			<form action="#" th:action="@{/connexions}" method="post">
+
+				<erreur th:unless="${message == ''}"> [[${message}]] </erreur>
+				<br />
+				<br />
+
+				<label>Add Contact (Email):</label>
+				<input type="email" required name="emailContact" />
+
+				<br />
+				<br />
+
+				<button id="bouton" type="submit">Add</button>
+
+			</form>
+			<br />
+
+			<br />
+
+
+			<div id="tableconnexions">
+				<table>
+					<thead id="tableconnexionshead">
+						<tr>
+							<th style="width:290px">Contact Email</th>
+						</tr>
+					</thead>
+
+					<tbody>
+
+						<tr th:if="${connexions.empty}">
+							<td colspan="1">Aucune connexion pour cet utilisateur en base de données</td>
+						</tr>
+						<tr th:each="connexion: ${connexions}">
+							<td><span th:text="${connexion.email}">Contact Email</span></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+</body>
+
+</html>

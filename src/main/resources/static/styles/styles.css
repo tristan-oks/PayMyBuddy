@@ -1,0 +1,148 @@
+table {
+	margin-left:auto;
+	margin-right:auto;
+  	border: 1px solid black;
+  	border-collapse: collapse;
+  	font: 12px "Open Sans", Helvetica, Arial, sans-serif;
+  	text-align: center;
+}
+
+thead {
+  	background-color: #5cb95c;
+  	color: white;
+}
+
+th, td {
+  	padding:6px 9px;
+  	height: 50px;
+}
+
+label {
+	display: inline-block;
+    width: 110px;
+    margin: 5px;
+    text-align: left;
+}
+
+input, select {
+	display: inline-block;
+    margin: 5px;
+    text-align: left;
+    justify-content: space-between;
+    width: 200px;
+}
+
+erreur {
+	border: 2px solid red;
+	font: 12px "Open Sans", Helvetica, Arial, sans-serif;
+	color: red;
+	margin-left:5px;
+	margin-right:5px;
+}
+
+body {
+	margin-left: auto;
+	margin-right: auto;
+	max-width: 700px;
+	font-family: Arial, sans-serif, moderna;
+	text-align: center;
+	justify-content: center; 
+}
+
+footer {
+	display: flex;
+  	background-color: white;  
+  	flex-direction: row;
+   	margin-left:auto;
+	margin-right:auto;
+  	text-align: center;
+  	justify-content: center ; 
+}
+
+a {
+	color : #0076d9;
+  	font: 16px "Open Sans", Helvetica, Arial, sans-serif;
+  	text-decoration: none;
+}
+
+#boite {
+	display: flex;
+	flex-direction: column;
+	margin-left: auto;
+	margin-right: auto;
+	text-align: center;
+	justify-content: center; 
+	border: 1px solid lightgrey;
+	padding: 20px;
+	border-radius: 15px;
+	width: 550px;
+	align-items: center;
+	height: 550px;
+}
+
+#entete {
+	display: flex;
+  	background-color: white;  
+  	height: 30px;
+  	flex-direction: row;
+  	justify-content: space-between;
+  	align-items: stretch;
+  	margin-left: 1px;
+	margin-right: 1px;
+}
+
+#pages {
+	color : #0076d9;
+  	font: 16px "Open Sans", Helvetica, Arial, sans-serif;
+  	border: 1px solid lightgrey;
+	padding: 10px;
+	border-radius: 5px;
+	width: auto;
+	align-items: center;
+	text-decoration: none;
+}
+
+#logo {
+  	background-color: #5cb95c;  
+  	color : white;
+  	padding: 5px;
+  	justify-content: space-between ;
+	border-radius: 10px;
+	width: auto;
+	align-items: center;
+ }
+ 
+#bouton {
+  	background-color: #0076d9;
+  	color : white;
+  	padding: 8px;
+  	justify-content: space-between ;
+	border-radius: 10px;
+	width: 100px;
+	align-items: center;
+ }
+
+#navbar {
+	display: flex;
+  	background-color: white;  
+  	color : #0076d9;
+  	font: 16px "Open Sans", Helvetica, Arial, sans-serif;
+  	flex-direction: row;
+  	padding-right: 5%;
+  	justify-content: right; 
+	width: auto;
+  	align-items: stretch;
+  	gap: 20px;
+  	text-decoration: none;
+}
+
+#tableconnexions{
+	width:300px;
+	height: 250px; 
+	overflow-y: auto;
+}
+
+#tableconnexionshead {
+	position: sticky;
+	top: 0;
+}

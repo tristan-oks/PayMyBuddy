@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhml" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<link th:href="@{/styles/styles.css}" rel="stylesheet">
+	<meta charset="UTF-8">
+	<title>PayMyBuddy Profile</title>
+</head>
+
+<body>
+	<header>
+		<div id="entete">
+			<div id="logo">Pay My Buddy</div>
+			<div id="navbar">
+				<div><a th:href="@{/}">Home</a></div>
+				<div><a th:href="@{/transactions}">Transfer</a></div>
+				<div><a th:href="@{/profil}">Profile</a></div>
+				<div><a th:href="@{/connexions}">Contacts</a></div>
+				<div><a th:href="@{/deconnexion}">Logoff</a></div>
+			</div>
+		</div>
+	</header>
+	</br>
+
+	<div id="boite">
+		<h2 id="logo"> [[${utilisateur.email}]] Profile </h2>
+
+		<form action="#" th:action="@{/profil}" method="post" th:object="${utilisateur}">
+
+			<erreur th:unless="${message == ''}"> [[${message}]] </erreur>
+			<br />
+			<br />
+
+			<label>Name :</label>
+			<input type="text" required th:field="*{nom}" th:value="*{nom}" />
+			<br />
+			<br />
+
+			<label>Email :</label>
+			<input type="email" disabled th:field="*{email}" />
+			<br />
+			<br />
+
+			<label>Password :</label>
+			<input type="password" required th:field="*{motDePasse}" th:value="*{motDePasse}" />
+			<br />
+			<br />
+
+
+			<label>balance :</label>
+			<input type="number" disabled th:field="*{solde}" />
+			<br />
+			<br />
+			
+			<HR size=4 color=lightgrey align=center width="100%">
+			<h2 id="logo">Bancarial Operation</h2>
+			<br />
+
+			<label>Bank Account :</label>
+			<input type="text" name="compteBancaire" value="" />
+			<br />
+
+			<label style="width:auto" >Credit</label>
+			<input type="radio" style="width:20px" name="creditDebit" checked value="credit" />
+			<label style="width:auto" >Debit</label>
+			<input type="radio" style="width:20px" name="creditDebit" value="debit" />
+			<br />
+
+			<label>Amount :</label>
+			<input type="number" min="0" name="montant" value="0" />
+			<br />
+			<br />
+
+			<button id="bouton" type="submit">Validate</button>
+		</form>
+	</div>
+
+</body>
+
+</html>
