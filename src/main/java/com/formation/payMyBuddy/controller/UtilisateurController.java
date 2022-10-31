@@ -78,6 +78,11 @@ public class UtilisateurController {
 			return new ModelAndView("inscription", model);
 		}
 		utilisateur.setSolde(0);
+		try {
+			utilisateur.setMotDePasse(utilisateurService.encrypte(utilisateur.getMotDePasse()));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		utilisateurRepository.save(utilisateur);
 		String message = "utilisateur inscrit : " + utilisateur.getNom();
 		model.addAttribute("message", message);
@@ -115,6 +120,12 @@ public class UtilisateurController {
 		}
 
 		Utilisateur utilisateurAConnecter = optUtilisateur.get();
+
+		try {
+			utilisateur.setMotDePasse(utilisateurService.encrypte(utilisateur.getMotDePasse()));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 
 		logger.info("utilisateur mot de passe BDD : " + utilisateurAConnecter.getMotDePasse()
 				+ ", utilisateur mot de passe entré : " + utilisateur.getMotDePasse());

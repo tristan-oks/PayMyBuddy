@@ -13,4 +13,6 @@ public interface IUtilisateurService {
 	public String getNom(String email);
 
 	public String modifierUtilisateur(String email, Utilisateur utilisateur, String compteBancaire, String creditDebit, float montant);
+
+	public String encrypte(String texteEnClair) throws Exception;
 }
