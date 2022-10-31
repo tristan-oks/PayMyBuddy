@@ -33,9 +33,8 @@ CREATE TABLE `creditbanque` (
   PRIMARY KEY (`idcredit`),
   KEY `FK_utilisateurcredit` (`utilisateurcredit`),
   CONSTRAINT `FK_utilisateurcredit` FOREIGN KEY (`utilisateurcredit`) REFERENCES `utilisateur` (`email`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
 
 --
 -- Table structure for table `debitbanque`
@@ -53,9 +52,8 @@ CREATE TABLE `debitbanque` (
   PRIMARY KEY (`iddebit`),
   KEY `FK_utilisateurdebit` (`utilisateurdebit`),
   CONSTRAINT `FK_utilisateurdebit` FOREIGN KEY (`utilisateurdebit`) REFERENCES `utilisateur` (`email`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
 
 --
 -- Table structure for table `transaction`
@@ -74,10 +72,10 @@ CREATE TABLE `transaction` (
   PRIMARY KEY (`idtransaction`),
   KEY `FK5u5i8xqs0knd2o1qh7mix78ts` (`utilisateurtransaction`),
   KEY `FK_utilisateurcontact` (`utilisateurcontact`),
-  CONSTRAINT `FK_utilisateurcontact` FOREIGN KEY (`utilisateurcontact`) REFERENCES `utilisateur` (`email`)
-) ENGINE=InnoDB AUTO_INCREMENT=50 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  CONSTRAINT `FK_utilisateurcontact` FOREIGN KEY (`utilisateurcontact`) REFERENCES `utilisateur` (`email`),
+  CONSTRAINT `FK_utilisateurtransaction` FOREIGN KEY (`utilisateurtransaction`) REFERENCES `utilisateur` (`email`)
+) ENGINE=InnoDB AUTO_INCREMENT=54 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
 
 --
 -- Table structure for table `utilisateur`
@@ -95,8 +93,6 @@ CREATE TABLE `utilisateur` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
-
-
 --
 -- Table structure for table `utilisateur_utilisateur`
 --
@@ -108,11 +104,11 @@ CREATE TABLE `utilisateur_utilisateur` (
   `utilisateur_email` varchar(100) NOT NULL,
   `contact_email` varchar(100) NOT NULL,
   PRIMARY KEY (`utilisateur_email`,`contact_email`),
-  KEY `FK8p5n65bqtiuai2bxa2hk57b3v` (`contact_email`)
+  KEY `FK8p5n65bqtiuai2bxa2hk57b3v` (`contact_email`),
+  CONSTRAINT `FK_contactemail` FOREIGN KEY (`contact_email`) REFERENCES `utilisateur` (`email`),
+  CONSTRAINT `FK_utilisateuremail` FOREIGN KEY (`utilisateur_email`) REFERENCES `utilisateur` (`email`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
-
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -123,4 +119,4 @@ CREATE TABLE `utilisateur_utilisateur` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-10-18 14:27:18
+-- Dump completed on 2022-10-31 23:47:53

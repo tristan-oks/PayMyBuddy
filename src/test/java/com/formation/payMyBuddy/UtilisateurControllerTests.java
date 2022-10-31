@@ -110,7 +110,7 @@ public class UtilisateurControllerTests {
 	public void testPostConnexion() throws Exception {
 		session.setAttribute("email", null);
 		MockHttpServletRequestBuilder builder = MockMvcRequestBuilders.post("/connexion").session(session)
-				.param("remember", "vrai").param("email", "un@test.com").param("motDePasse", "1");
+				.param("remember", "vrai").param("email", "un@test.com").param("motDePasse", "1234");
 		mockMvc.perform(builder).andExpect(MockMvcResultMatchers.status().is3xxRedirection());
 	}
 
@@ -128,7 +128,7 @@ public class UtilisateurControllerTests {
 	public void testPostProfil() throws Exception {
 		session.setAttribute("email", "un@test.com");
 		MockHttpServletRequestBuilder builder = MockMvcRequestBuilders.post("/profil").session(session)
-				.param("nom", "testProfil").param("motDePasse", "1").param("montant", "0.0");
+				.param("nom", "testProfil").param("motDePasse", "1234").param("montant", "0.0");
 		mockMvc.perform(builder).andExpect(MockMvcResultMatchers.status().isOk());
 	}
 
@@ -136,7 +136,7 @@ public class UtilisateurControllerTests {
 	public void testPostCredit() throws Exception {
 		session.setAttribute("email", "un@test.com");
 		MockHttpServletRequestBuilder builder = MockMvcRequestBuilders.post("/profil").session(session)
-				.param("nom", "testProfil").param("motDePasse", "1").param("montant", "100.0").param("creditDebit", "credit").param("compteBancaire", "TestCredit");
+				.param("nom", "testProfil").param("motDePasse", "1234").param("montant", "100.0").param("creditDebit", "credit").param("compteBancaire", "TestCredit");
 		mockMvc.perform(builder).andExpect(MockMvcResultMatchers.status().isOk());
 	}
 	
@@ -144,7 +144,7 @@ public class UtilisateurControllerTests {
 	public void testPostDebit() throws Exception {
 		session.setAttribute("email", "un@test.com");
 		MockHttpServletRequestBuilder builder = MockMvcRequestBuilders.post("/profil").session(session)
-				.param("nom", "testProfil").param("motDePasse", "1").param("montant", "1.0").param("creditDebit", "debit").param("compteBancaire", "TestDebit");
+				.param("nom", "testProfil").param("motDePasse", "1234").param("montant", "1.0").param("creditDebit", "debit").param("compteBancaire", "TestDebit");
 		mockMvc.perform(builder).andExpect(MockMvcResultMatchers.status().isOk());
 	}
 

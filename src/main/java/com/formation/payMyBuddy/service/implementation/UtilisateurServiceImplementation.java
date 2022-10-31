@@ -1,7 +1,11 @@
 package com.formation.payMyBuddy.service.implementation;
 
+import java.security.Key;
 import java.sql.Timestamp;
 import java.util.Optional;
+
+import javax.crypto.Cipher;
+import javax.crypto.spec.SecretKeySpec;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,10 +33,6 @@ public class UtilisateurServiceImplementation implements IUtilisateurService {
 
 	private Logger logger = LoggerFactory.getLogger(getClass());
 
-//	public Iterable<Utilisateur> getUtilisateurs() {
-//		return utilisateurRepo.findAll();
-//	}
-
 	public Optional<Utilisateur> getUtilisateurByEmail(String email) {
 		return utilisateurRepo.findById(email);
 	}
@@ -51,6 +51,11 @@ public class UtilisateurServiceImplementation implements IUtilisateurService {
 		Utilisateur utilisateurAModifier = optUtilisateur.get();
 		if (montant != 0) { // operation bancaire
 			message = operationBancaire(compteBancaire, creditDebit, montant, utilisateurAModifier);
+		}
+		try {
+			utilisateur.setMotDePasse(encrypte(utilisateur.getMotDePasse()));
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 		if (!utilisateur.getMotDePasse().equals(utilisateurAModifier.getMotDePasse())) {
 			utilisateurAModifier.setMotDePasse(utilisateur.getMotDePasse());
@@ -83,7 +88,7 @@ public class UtilisateurServiceImplementation implements IUtilisateurService {
 			credit.setMontant(montant);
 			credit.setUtilisateurCredit(utilisateurAModifier);
 			creditBanqueRepo.save(credit);
-			
+
 			utilisateurAModifier.setSolde(utilisateurAModifier.getSolde() + montant);
 			utilisateurRepo.save(utilisateurAModifier);
 			String message = "Compte Bancaire " + compteBancaire + " crédité de : " + montant + ", ";
@@ -102,7 +107,7 @@ public class UtilisateurServiceImplementation implements IUtilisateurService {
 			debit.setMontant(montant);
 			debit.setUtilisateurDebit(utilisateurAModifier);
 			debitBanqueRepo.save(debit);
-			
+
 			utilisateurAModifier.setSolde(utilisateurAModifier.getSolde() - montant);
 			utilisateurRepo.save(utilisateurAModifier);
 			String message = "Compte Bancaire " + compteBancaire + " débité de : " + montant + ", ";
@@ -111,4 +116,11 @@ public class UtilisateurServiceImplementation implements IUtilisateurService {
 		}
 	}
 
+	public String encrypte(String texteEnClair) throws Exception {
+		Cipher cipher = Cipher.getInstance("RC4");
+		Key cle = new SecretKeySpec("12345678".getBytes(), "RC4");
+		cipher.init(Cipher.ENCRYPT_MODE, cle);
+		byte[] texteCrypte = cipher.doFinal(texteEnClair.getBytes());
+		return new String(texteCrypte);
+	}
 }
